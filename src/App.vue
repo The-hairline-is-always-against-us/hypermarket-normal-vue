@@ -19,20 +19,33 @@
             </li>
             <li v-else>
               欢迎
-              <el-popover placement="top" width="180" v-model="visible">
-                <p>确定退出登录吗？</p>
+                
+                
+                <el-button type="text" slot="reference" v-model="visible">
+                  <el-dropdown>
+                  <span class="el-dropdown-link">
+                    {{this.$store.getters.getUser.userName}}
+                  </span>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item ><router-link to="/order" style="color:black">我的订单</router-link></el-dropdown-item>
+                    <el-dropdown-item ><router-link to="/collect" style="color:black">我的收藏</router-link></el-dropdown-item>
+                    <el-dropdown-item ><router-link to="/Storedetails" style="color:black">个人信息</router-link></el-dropdown-item>
+                    <el-dropdown-item ><router-link to="/collect" style="color:black">成为卖家</router-link></el-dropdown-item>
+                    <el-dropdown-item @click.native="logout" style="color:black">退出登录</el-dropdown-item>
+                  </el-dropdown-menu>
+
+                  <!--
+
+                      <p>确定退出登录吗？</p>
                 <div style="text-align: right; margin: 10px 0 0">
                   <el-button size="mini" type="text" @click="visible = false">取消</el-button>
                   <el-button type="primary" size="mini" @click="logout">确定</el-button>
                 </div>
-                <el-button type="text" slot="reference">{{this.$store.getters.getUser.userName}}</el-button>
-              </el-popover>
-            </li>
-            <li>
-              <router-link to="/order">我的订单</router-link>
-            </li>
-            <li>
-              <router-link to="/collect">我的收藏</router-link>
+
+                  -->
+
+                </el-dropdown>
+                </el-button>
             </li>
             <li :class="getNum > 0 ? 'shopCart-full' : 'shopCart'">
               <router-link to="/shoppingCart">
@@ -40,6 +53,8 @@
                 <span class="num">({{getNum}})</span>
               </router-link>
             </li>
+
+
           </ul>
         </div>
       </div>
