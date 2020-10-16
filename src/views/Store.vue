@@ -149,14 +149,20 @@ export default {
       this.accessoryActive = val;
     },
     // 获取各类商品数据方法封装
-    getPromo(categoryName, val, api) {
-      api = api != undefined ? api : "/api/product/getPromoProduct";
-      this.$axios
-        .post(api, {
-          categoryName
-        })
-        .then(res => {
-          this[val] = res.data.Product;
+    getPromo(categoryName, val) {
+      // api = api != undefined ? api : "/api/product/getPromoProduct";
+      // this.$axios
+      //   .post(api, {
+      //     categoryName
+      //   })
+      //   .then(res => {
+      //     this[val] = res.data.Product;
+      //   })
+      //   .catch(err => {
+      //     return Promise.reject(err);
+      //   });
+       this.postRequest('/api/getGoodsByTname',{'t_name':'手机'}).then(res => {
+          this[val] = res.data.message;
         })
         .catch(err => {
           return Promise.reject(err);

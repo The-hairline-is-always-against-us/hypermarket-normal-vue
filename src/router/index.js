@@ -93,18 +93,12 @@ export const constantRouterMap = [
   {
     path: '/Store',
     name: 'Store',
-    component: () => import('../views/Store.vue'),
-    meta: {
-      requireAuth: true // 需要验证登录状态
-    }
+    component: () => import('../views/Store.vue')
   },
   {
     path: '/Storedetails',
     name: 'Storedetails',
-    component: () => import('../views/Storedetails.vue'),
-    meta: {
-      requireAuth: true // 需要验证登录状态
-    }
+    component: () => import('../views/Storedetails.vue')
   }
 ]
 

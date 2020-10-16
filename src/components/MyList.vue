@@ -18,10 +18,10 @@
         </el-popover>
         <router-link :to="{ path: '/goods/details', query: {productID:item.product_id} }">
           <img :src="$target +item.product_picture" alt />
-          <h2>{{item.product_name}}</h2>
-          <h3>{{item.product_title}}</h3>
+          <h2>{{item.g_name}}</h2>
+          <h3>{{item.g_intro}}</h3>
           <p>
-            <span>{{item.product_selling_price}}元</span>
+            <span>{{item.g_price}}元</span>
             <span
               v-show="item.product_price != item.product_selling_price"
               class="del"
