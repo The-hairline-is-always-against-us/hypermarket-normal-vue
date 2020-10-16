@@ -16,8 +16,8 @@
           </div>
           <i class="el-icon-close delete" slot="reference" v-show="isDelete"></i>
         </el-popover>
-        <router-link :to="{ path: '/goods/details', query: {productID:item.product_id} }">
-          <img :src="$target +item.product_picture" alt />
+        <router-link :to="{ path: '/goods/details', query: {productID:item.g_id} }">
+          <img :src="item.g_picture" alt />
           <h2>{{item.g_name}}</h2>
           <h3>{{item.g_intro}}</h3>
           <p>
