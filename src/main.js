@@ -13,10 +13,17 @@ import store from './store'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
+import {getRequest} from './utils/axiousApi'
+import {postRequest} from './utils/axiousApi'
+import {uploadFileRequest} from './utils/axiousApi'
 
 // 全局函数及变量
 import Global from './Global';
 Vue.use(Global);
+
+Vue.prototype.getRequest = getRequest;
+Vue.prototype.postRequest = postRequest;
+Vue.prototype.uploadFileRequest = uploadFileRequest;
 
 import Axios from 'axios';
 Vue.prototype.$axios = Axios;
