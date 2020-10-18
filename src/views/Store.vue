@@ -164,6 +164,7 @@ export default {
        this.postRequest('/api/getGoodsByTname',{'t_name':'手机'}).then(res => {
           this[val] = res.data.message;
         })
+        JSON.stringify()
     },
     // 向后端请求分类列表数据
     getCategory() {

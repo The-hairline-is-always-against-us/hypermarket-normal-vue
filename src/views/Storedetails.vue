@@ -14,27 +14,29 @@
                 <div class="grid-content bg-purple" style="height:460px;">
                     <div class="sname">
                         <span>商铺名称：</span>
-                        <span style="font-size:24px">{{storename}}</span>
+                        <span style="font-size:24px">{{store.s_name}}</span>
                     </div>
                     <div class="sintro">
                         <span>商铺简介：</span>
                         <div class="intro">
-                            <p>{{storeintro}}</p>
+                            <p>{{store.s_intro}}</p>
                         </div>
                     </div>
                     <div class="stime">
-                        <span>开店时间：{{storetime}}</span>
+                        <span>申请时间：{{store.request_time}}</span>
                     </div>
-                    <div class="stime">
-                        <span>关店时间：{{storetime}}</span>
+                    <div class="ctime">
+                        <span v-if="store.create_time !==null">营业时间：{{store.create_time}}</span>
+                        <span v-if="store.create_time ===null">营业时间：还未批准开始营业</span>
                     </div>
                     <div class="snumber">
-                        <span>营销额：{{storetime}}</span>
+                        <span v-if="store.sale_count !==null">营销额：{{store.sale_count}}</span>
+                        <span v-if="store.sale_count ===null">营销额：0</span>
                     </div>
                     <div>
-                        <router-link to="/Store"><el-button type="success" round v-if="true" style="width:100%;">查看所有商品</el-button></router-link>
+                        <router-link to="/Store"><el-button type="success" round v-if="store.create_time !==null" style="width:100%;">查看所有商品</el-button></router-link>
                         
-                        <el-button type="info" round v-if="false" style="width:100%;">该商铺已关闭</el-button>
+                        <el-button type="info" round v-if="store.create_time ===null" style="width:100%;">该商铺无法正常营业</el-button>
                     </div>
                 </div>
             </el-col>
@@ -47,23 +49,46 @@ export default {
     data() {
         return {
         carousel: "", // 轮播图数据
-        storename:"商铺名称",
-        storeintro:"本店专门营销什么什么商品，假一罚十信誉保证。本店的服务宗旨是用心服务，以诚待人! 类似这样的简洁风格的介绍，其实，准确点说算是网店宣言。简洁、明了，从诚信经营出发，看过之后，留不下什么印象。 适用网店：新店、没有写作功底的店长。",
-        storetime:"2020-10-15 19：20：55"
+        store:null,
+        categoryID: 6
 
         };
     },
-    created() {
-    // 获取轮播图数据
-    this.$axios
-      .post("/api/resources/carousel", {})
-      .then(res => {
-        this.carousel = res.data.carousel;
-      })
-      .catch(err => {
-        return Promise.reject(err);
-      });
-  }
+    activated() {
+        if (this.$route.query.categoryID != undefined) {
+            this.categoryID = this.$route.query.categoryID;
+            console.log(this.$route.query.categoryID)
+        }
+    },
+    watch: {
+    // 监听商品id的变化，请求后端获取商品数据
+    categoryID: function(val) {
+      this.init(val);
+      this.getDetailsPicture(val);
+    }
+  },
+    methods: {
+        init() {
+            // 获取店铺详情数据
+            this.postRequest('/api/getStoreBySid',{
+                s_id:this.categoryID
+            }).then(resp => {
+                this.store = resp.data.message;
+                console.log(this.store);
+            })
+        },
+        getDetailsPicture() {
+            // 获取轮播图数据
+            this.$axios
+            .post("/api/resources/carousel", {})
+            .then(res => {
+                this.carousel = res.data.carousel;
+            })
+            .catch(err => {
+                return Promise.reject(err);
+            });
+        }
+    }
 
 }
 </script>
@@ -99,7 +124,12 @@ export default {
   .el-row .sintro .intro p{
       margin-left: 14px;
   }
+  
   .el-row .stime{
+      height: 10%;
+      font-size: 18px;
+  }
+  .el-row .ctime{
       height: 10%;
       font-size: 18px;
   }

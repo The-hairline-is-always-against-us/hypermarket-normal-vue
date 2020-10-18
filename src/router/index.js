@@ -96,6 +96,21 @@ export const constantRouterMap = [
     component: () => import('../views/Store.vue')
   },
   {
+    path: '/MyStore',
+    name: 'MyStore',
+    component: () => import('../views/MyStore.vue')
+  },
+  {
+    path: '/AddGoods',
+    name: 'AddGoods',
+    component: () => import('../views/AddGoods.vue')
+  },
+  {
+    path: '/ApplyStore',
+    name: 'ApplyStore',
+    component: () => import('../views/ApplyStore.vue')
+  },
+  {
     path: '/Storedetails',
     name: 'Storedetails',
     component: () => import('../views/Storedetails.vue')
