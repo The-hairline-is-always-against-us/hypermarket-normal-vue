@@ -12,7 +12,7 @@
         <el-popover placement="top">
           <p>确定删除吗？</p>
           <div style="text-align: right; margin: 10px 0 0">
-            <el-button type="primary" size="mini" @click="deleteCollect(item.product_id)">确定</el-button>
+            <el-button type="primary" size="mini" @click="deleteCollect(item.g_id)">确定</el-button>
           </div>
           <i class="el-icon-close delete" slot="reference" v-show="isDelete"></i>
         </el-popover>
@@ -64,33 +64,11 @@ export default {
   },
   methods: {
     deleteCollect(product_id) {
-      this.$axios
-        .post("/api/user/collect/deleteCollect", {
-          user_id: this.$store.getters.getUser.user_id,
-          product_id: product_id
-        })
-        .then(res => {
-          switch (res.data.code) {
-            case "001":
-              // 删除成功
-              // 删除删除列表中的该商品信息
-              for (let i = 0; i < this.list.length; i++) {
-                const temp = this.list[i];
-                if (temp.product_id == product_id) {
-                  this.list.splice(i, 1);
-                }
-              }
-              // 提示删除成功信息
-              this.notifySucceed(res.data.msg);
-              break;
-            default:
-              // 提示删除失败信息
-              this.notifyError(res.data.msg);
-          }
-        })
-        .catch(err => {
-          return Promise.reject(err);
-        });
+      this.getRequest(`/api/delete/${product_id}`).then(resp => {
+        if (resp.data.code == 200) {
+          this.$message.success(resp.data.message)
+        }
+      })
     }
   }
 };

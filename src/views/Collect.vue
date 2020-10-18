@@ -38,18 +38,11 @@ export default {
   },
   activated() {
     // 获取收藏数据
-    this.$axios
-      .post("/api/user/collect/getCollect", {
-        user_id: this.$store.getters.getUser.user_id
-      })
-      .then(res => {
-        if (res.data.code === "001") {
-          this.collectList = res.data.collectList;
+    this.getRequest('/api/collectall').then(resp => {
+        if (resp.data.code == 200) {
+          this.collectList = resp.data.message
         }
-      })
-      .catch(err => {
-        return Promise.reject(err);
-      });
+    })
   }
 };
 </script>

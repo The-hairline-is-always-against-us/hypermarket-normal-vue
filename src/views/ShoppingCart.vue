@@ -21,14 +21,11 @@
     <!-- 购物车头部END -->
 
     <!-- 购物车主要内容区 -->
-    <div class="content" v-if="getShoppingCart.length>0">
+    <div class="content" v-if="this.shoppingList.length>0">
       <ul>
         <!-- 购物车表头 -->
         <li class="header">
-          <div class="pro-check">
-            <el-checkbox v-model="isAllCheck">全选</el-checkbox>
-          </div>
-          <div class="pro-img"></div>
+          <div class="pro-img" style="margin-left: 100px"></div>
           <div class="pro-name">商品名称</div>
           <div class="pro-price">单价</div>
           <div class="pro-num">数量</div>
@@ -38,72 +35,42 @@
         <!-- 购物车表头END -->
 
         <!-- 购物车列表 -->
-        <li class="product-list" v-for="(item,index) in getShoppingCart" :key="item.id">
+        <li class="product-list" v-for="(item,index) in this.shoppingList" :key="item.id">
           <div class="pro-check">
-            <el-checkbox :value="item.check" @change="checkChange($event,index)"></el-checkbox>
           </div>
           <div class="pro-img">
-            <router-link :to="{ path: '/goods/details', query: {productID:item.productID} }">
-              <img :src="$target + item.productImg" />
+            <router-link :to="{ path: '/goods/details', query: {productID:item.g_id} }">
+              <img :src="item.g_picture" />
             </router-link>
           </div>
           <div class="pro-name">
             <router-link
               :to="{ path: '/goods/details', query: {productID:item.productID} }"
-            >{{item.productName}}</router-link>
+            >{{item.g_name}}</router-link>
           </div>
-          <div class="pro-price">{{item.price}}元</div>
+          <div class="pro-price">{{item.g_price}}元</div>
           <div class="pro-num">
             <el-input-number
               size="small"
-              :value="item.num"
+              :value="item.c_number"
               @change="handleChange($event,index,item.productID)"
               :min="1"
               :max="item.maxNum"
             ></el-input-number>
           </div>
-          <div class="pro-total pro-total-in">{{item.price*item.num}}元</div>
+          <div class="pro-total pro-total-in">{{item.g_price*item.c_number}}元</div>
+
+          <router-link :to="{ path:'/confirmOrder' , query:{project: item} }">
+            <el-button
+                type="primary"
+                size="mini"
+            >结算</el-button>
+          </router-link>
           <div class="pro-action">
-            <el-popover placement="right">
-              <p>确定删除吗？</p>
-              <div style="text-align: right; margin: 10px 0 0">
-                <el-button
-                  type="primary"
-                  size="mini"
-                  @click="deleteItem($event,item.id,item.productID)"
-                >确定</el-button>
-              </div>
-              <i class="el-icon-error" slot="reference" style="font-size: 18px;"></i>
-            </el-popover>
           </div>
         </li>
         <!-- 购物车列表END -->
       </ul>
-      <div style="height:20px;background-color: #f5f5f5"></div>
-      <!-- 购物车底部导航条 -->
-      <div class="cart-bar">
-        <div class="cart-bar-left">
-          <span>
-            <router-link to="/goods">继续购物</router-link>
-          </span>
-          <span class="sep">|</span>
-          <span class="cart-total">
-            共
-            <span class="cart-total-num">{{getNum}}</span> 件商品，已选择
-            <span class="cart-total-num">{{getCheckNum}}</span> 件
-          </span>
-        </div>
-        <div class="cart-bar-right">
-          <span>
-            <span class="total-price-title">合计：</span>
-            <span class="total-price">{{getTotalPrice}}元</span>
-          </span>
-          <router-link :to="getCheckNum > 0 ? '/confirmOrder' : ''">
-            <div :class="getCheckNum > 0 ? 'btn-primary' : 'btn-primary-disabled'">去结算</div>
-          </router-link>
-        </div>
-      </div>
-      <!-- 购物车底部导航条END -->
     </div>
     <!-- 购物车主要内容区END -->
 
@@ -123,7 +90,21 @@ import { mapGetters } from "vuex";
 
 export default {
   data() {
-    return {};
+    return {
+      shoppingList: ''
+    };
+  },
+  created() {
+    this.getRequest('/api/getShoppingCar').then(resp => {
+        this.shoppingList = resp.data.message
+    })
+    console.log(this.shoppingList)
+  },
+  activated() {
+    this.getRequest('/api/getShoppingCar').then(resp => {
+      this.shoppingList = resp.data.message
+    })
+    console.log(this.shoppingList)
   },
   methods: {
     ...mapActions(["updateShoppingCart", "deleteShoppingCart", "checkAll"]),

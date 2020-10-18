@@ -19,13 +19,13 @@
     <!-- 我的订单头部END -->
 
     <!-- 我的订单主要内容 -->
-    <div class="order-content" v-if="orders.length>0">
-      <div class="content" v-for="(item,index) in orders" :key="index">
+    <div class="order-content" v-if="this.list.size > 0">
+      <div class="content" v-for="(item) in this.list" :key='item'>
         <ul>
           <!-- 我的订单表头 -->
           <li class="order-info">
-            <div class="order-id">订单编号: {{item[0].order_id}}</div>
-            <div class="order-time">订单时间: {{item[0].order_time | dateFormat}}</div>
+            <div class="order-id">订单编号: {{item.o_id}}</div>
+            <div class="order-time">订单时间: {{item.order_time | dateFormat}}</div>
           </li>
           <li class="header">
             <div class="pro-img"></div>
@@ -37,33 +37,33 @@
           <!-- 我的订单表头END -->
 
           <!-- 订单列表 -->
-          <li class="product-list" v-for="(product,i) in item" :key="i">
+          <li class="product-list">
             <div class="pro-img">
-              <router-link :to="{ path: '/goods/details', query: {productID:product.product_id} }">
-                <img :src="$target + product.product_picture" />
+              <router-link :to="{ path: '/goods/details', query: {productID:item.g_id} }">
+                <img :src="item.g_picture" />
               </router-link>
             </div>
             <div class="pro-name">
               <router-link
-                :to="{ path: '/goods/details', query: {productID:product.product_id} }"
-              >{{product.product_name}}</router-link>
+                :to="{ path: '/goods/details', query: {productID:item.g_id} }"
+              >{{item.g_name}}</router-link>
             </div>
-            <div class="pro-price">{{product.product_price}}元</div>
-            <div class="pro-num">{{product.product_num}}</div>
-            <div class="pro-total pro-total-in">{{product.product_price*product.product_num}}元</div>
+            <div class="pro-price">{{item.g_price}}元</div>
+            <div class="pro-num">{{item.o_number}}</div>
+            <div class="pro-total pro-total-in">{{item.g_price*item.o_number}}元</div>
           </li>
         </ul>
         <div class="order-bar">
           <div class="order-bar-left">
             <span class="order-total">
               共
-              <span class="order-total-num">{{total[index].totalNum}}</span> 件商品
+              <span class="order-total-num">{{item.o_number}}</span> 件商品
             </span>
           </div>
           <div class="order-bar-right">
             <span>
               <span class="total-price-title">合计：</span>
-              <span class="total-price">{{total[index].totalPrice}}元</span>
+              <span class="total-price">{{item.g_price}}元</span>
             </span>
           </div>
           <!-- 订单列表END -->
@@ -87,26 +87,23 @@
 export default {
   data() {
     return {
-      orders: [], // 订单列表
-      total: [] // 每个订单的商品数量及总价列表
+      list: ''
     };
   },
   activated() {
     // 获取订单数据
-    this.$axios
-      .post("/api/user/order/getOrder", {
-        user_id: this.$store.getters.getUser.user_id
-      })
-      .then(res => {
-        if (res.data.code === "001") {
-          this.orders = res.data.orders;
-        } else {
-          this.notifyError(res.data.msg);
-        }
-      })
-      .catch(err => {
-        return Promise.reject(err);
-      });
+    this.getRequest('/api/selectOrders').then(resp => {
+      console.log(resp.data.message)
+      this.list = resp.data.message
+    })
+    console.log(this.list)
+  },
+  created() {
+    // 获取订单数据
+    this.getRequest('/api/selectOrders').then(resp => {
+      this.list = resp.data.message
+    })
+    console.log(this.list)
   },
   watch: {
     // 通过订单信息，计算出每个订单的商品数量及总价

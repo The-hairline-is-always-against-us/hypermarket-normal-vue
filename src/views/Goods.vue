@@ -170,10 +170,11 @@ export default {
           {"category_id":2,"category_name":"电视机"},
           {"category_id":3,"category_name":"空调"},
           {"category_id":4,"category_name":"洗衣机"},
-          {"category_id":5,"category_name":"保护套"},
-          {"category_id":6,"category_name":"保护膜"},
-          {"category_id":7,"category_name":"充电器"},
-          {"category_id":8,"category_name":"充电宝"}
+          {"category_id":5,"category_name":"配件"},
+          {"category_id":6,"category_name":"耳机"},
+          {"category_id":7,"category_name":"路由器"},
+          {"category_id":8,"category_name":"充电器"},
+          {"category_id":9,"category_name":"音响"}
       ]
     },
     // 向后端请求全部商品或分类商品数据
