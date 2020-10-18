@@ -165,41 +165,29 @@ export default {
     },
     // 向后端请求分类列表数据
     getCategory() {
-      this.$axios
-        .post("/api/product/getCategory", {})
-        .then(res => {
-          const val = {
-            category_id: 0,
-            category_name: "全部"
-          };
-          const cate = res.data.category;
-          cate.unshift(val);
-          this.categoryList = cate;
-        })
-        .catch(err => {
-          return Promise.reject(err);
-        });
+      this.categoryList = [
+          {"category_id":1,"category_name":"手机"},
+          {"category_id":2,"category_name":"电视机"},
+          {"category_id":3,"category_name":"空调"},
+          {"category_id":4,"category_name":"洗衣机"},
+          {"category_id":5,"category_name":"保护套"},
+          {"category_id":6,"category_name":"保护膜"},
+          {"category_id":7,"category_name":"充电器"},
+          {"category_id":8,"category_name":"充电宝"}
+      ]
     },
     // 向后端请求全部商品或分类商品数据
     getData() {
       // 如果分类列表为空则请求全部商品数据，否则请求分类商品数据
       const api =
         this.categoryID.length == 0
-          ? "/api/product/getAllProduct"
-          : "/api/product/getProductByCategory";
-      this.$axios
-        .post(api, {
-          categoryID: this.categoryID,
-          currentPage: this.currentPage,
-          pageSize: this.pageSize
-        })
-        .then(res => {
-          this.product = res.data.Product;
-          this.total = res.data.total;
-        })
-        .catch(err => {
-          return Promise.reject(err);
-        });
+          ? "/api/getGoods"
+          : "/api/getGoodsByTname";
+      this.postRequest(api,{
+        t_name: this.categoryID
+      }).then(resp => {
+        this.product = resp.data.message;
+      })
     },
     // 通过搜索条件向后端请求商品数据
     getProductBySearch() {
