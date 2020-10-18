@@ -14,16 +14,12 @@
       </div>
     </div>
     <div class="about-content">
-      <MyMarkdown></MyMarkdown>
+      <img style="width: 100%"  src="http://182.92.208.18:9000/project/20201009/u%3D2474965466%2C416813503%26fm%3D26%26gp%3D0.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=admin%2F20201018%2F%2Fs3%2Faws4_request&X-Amz-Date=20201018T150513Z&X-Amz-Expires=432000&X-Amz-SignedHeaders=host&X-Amz-Signature=1520585a23c141b2fd5fb72c439fb266d4f15e9eee63c1d1e662f0ce1298df92">
     </div>
   </div>
 </template>
 <script>
-import MyMarkdown from "../components/MyMarkdown";
 export default {
-  components: {
-    MyMarkdown
-  }
 };
 </script>
 <style scoped>

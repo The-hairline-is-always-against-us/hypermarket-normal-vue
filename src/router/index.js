@@ -56,7 +56,10 @@ export const constantRouterMap = [
   {
     path: '/goods/details',
     name: 'Details',
-    component: () => import('../views/Details.vue')
+    component: () => import('../views/Details.vue'),
+    meta: {
+      requireAuth: true // 需要验证登录状态
+    }
   },
   {
     path: '/shoppingCart',
@@ -93,37 +96,58 @@ export const constantRouterMap = [
   {
     path: '/Store',
     name: 'Store',
-    component: () => import('../views/Store.vue')
+    component: () => import('../views/Store.vue'),
+    meta: {
+      requireAuth: true // 需要验证登录状态
+    }
   },
   {
     path: '/MyStore',
     name: 'MyStore',
-    component: () => import('../views/MyStore.vue')
+    component: () => import('../views/MyStore.vue'),
+    meta: {
+      requireAuth: true // 需要验证登录状态
+    }
   },
   {
     path: '/GoodsManage',
     name: 'GoodsManage',
-    component: () => import('../views/GoodsManage.vue')
+    component: () => import('../views/GoodsManage.vue'),
+    meta: {
+      requireAuth: true // 需要验证登录状态
+    }
   },
   {
     path: '/AddGoods',
     name: 'AddGoods',
-    component: () => import('../views/AddGoods.vue')
+    component: () => import('../views/AddGoods.vue'),
+    meta: {
+      requireAuth: true // 需要验证登录状态
+    }
   },
   {
     path: '/UpdateGoods',
     name: 'UpdateGoods',
-    component: () => import('../views/UpdateGoods.vue')
+    component: () => import('../views/UpdateGoods.vue'),
+    meta: {
+      requireAuth: true // 需要验证登录状态
+    }
   },
   {
     path: '/ApplyStore',
     name: 'ApplyStore',
-    component: () => import('../views/ApplyStore.vue')
+    component: () => import('../views/ApplyStore.vue'),
+    meta: {
+      requireAuth: true // 需要验证登录状态
+    }
   },
   {
     path: '/Storedetails',
     name: 'Storedetails',
-    component: () => import('../views/Storedetails.vue')
+    component: () => import('../views/Storedetails.vue'),
+    meta: {
+      requireAuth: true // 需要验证登录状态
+    }
   }
 ]
 

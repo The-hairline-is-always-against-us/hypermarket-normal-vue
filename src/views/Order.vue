@@ -19,8 +19,8 @@
     <!-- 我的订单头部END -->
 
     <!-- 我的订单主要内容 -->
-    <div class="order-content" v-if="this.list.size > 0">
-      <div class="content" v-for="(item) in this.list" :key='item'>
+    <div class="order-content" v-if="this.orderFrom.length > 0">
+      <div class="content" v-for="(item) in this.orderFrom" :key='item'>
         <ul>
           <!-- 我的订单表头 -->
           <li class="order-info">
@@ -63,7 +63,7 @@
           <div class="order-bar-right">
             <span>
               <span class="total-price-title">合计：</span>
-              <span class="total-price">{{item.g_price}}元</span>
+              <span class="total-price">{{item.g_price*item.o_number}}元</span>
             </span>
           </div>
           <!-- 订单列表END -->
@@ -87,23 +87,8 @@
 export default {
   data() {
     return {
-      list: ''
+      orderFrom: ''
     };
-  },
-  activated() {
-    // 获取订单数据
-    this.getRequest('/api/selectOrders').then(resp => {
-      console.log(resp.data.message)
-      this.list = resp.data.message
-    })
-    console.log(this.list)
-  },
-  created() {
-    // 获取订单数据
-    this.getRequest('/api/selectOrders').then(resp => {
-      this.list = resp.data.message
-    })
-    console.log(this.list)
   },
   watch: {
     // 通过订单信息，计算出每个订单的商品数量及总价
@@ -123,6 +108,18 @@ export default {
       }
       this.total = total;
     }
+  },
+  created() {
+    // 获取订单数据
+    this.getRequest('/api/selectOrders').then(resp => {
+      this.orderFrom = resp.data.message
+    })
+  },
+  activated() {
+    // 获取订单数据
+    this.getRequest('/api/selectOrders').then(resp => {
+      this.orderFrom = resp.data.message
+    })
   }
 };
 </script>
