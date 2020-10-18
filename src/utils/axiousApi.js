@@ -1,18 +1,15 @@
 import axios from 'axios'
 // import {Message} from 'element-ui'
-// import { getToken } from "@/utils/auth";
+import { getToken } from "@/utils/auth";
 // import store from "@/store";
 // import da from 'element-ui/src/locale/lang/da';
 
-// axios.interceptors.request.use(config => {
-//     // if (store.getters.token) {
-//     //     config.headers['token'] = getToken();
-//     // }
-//     // return config;
-// }, err => {
-//     Message.error({message: '请求超时!'});
-//     // return Promise.resolve(err);
-// })
+axios.interceptors.request.use(config => {
+    if (getToken()) {
+        config.headers['token'] = getToken();
+    }
+    return config;
+})
 // axios.interceptors.response.use(data => {
 //     if (data.status == 200 && data.data.code == 400) {
 //         console.log('错误的')

@@ -29,6 +29,7 @@
 </template>
 <script>
 import { mapActions } from "vuex";
+import {setToken} from "@/utils/auth";
 
 export default {
   name: "MyLogin",
@@ -39,7 +40,7 @@ export default {
         return callback(new Error("请输入用户名"));
       }
       // 用户名以字母开头,长度在5-16之间,允许字母数字下划线
-      const userNameRule = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
+      const userNameRule = /^[a-zA-Z][a-zA-Z0-9_]{1,15}$/;
       if (userNameRule.test(value)) {
         this.$refs.ruleForm.validateField("checkPass");
         return callback();
@@ -53,7 +54,7 @@ export default {
         return callback(new Error("请输入密码"));
       }
       // 密码以字母开头,长度在6-18之间,允许字母数字和下划线
-      const passwordRule = /^[a-zA-Z]\w{5,17}$/;
+      const passwordRule = /^[a-zA-Z]\w{1,17}$/;
       if (passwordRule.test(value)) {
         this.$refs.ruleForm.validateField("checkPass");
         return callback();
@@ -94,33 +95,23 @@ export default {
       this.$refs["ruleForm"].validate(valid => {
         //如果通过校验开始登录
         if (valid) {
-          this.$axios
-            .post("/api/users/login", {
-              userName: this.LoginUser.name,
-              password: this.LoginUser.pass
-            })
-            .then(res => {
-              // “001”代表登录成功，其他的均为失败
-              if (res.data.code === "001") {
-                // 隐藏登录组件
-                this.isLogin = false;
-                // 登录信息存到本地
-                let user = JSON.stringify(res.data.user);
-                localStorage.setItem("user", user);
-                // 登录信息存到vuex
-                this.setUser(res.data.user);
-                // 弹出通知框提示登录成功信息
-                this.notifySucceed(res.data.msg);
-              } else {
-                // 清空输入框的校验状态
-                this.$refs["ruleForm"].resetFields();
-                // 弹出通知框提示登录失败信息
-                this.notifyError(res.data.msg);
-              }
-            })
-            .catch(err => {
-              return Promise.reject(err);
-            });
+          this.postRequest("/api/login",{
+            username: this.LoginUser.name,
+            password: this.LoginUser.pass
+          }).then(res => {
+            this.isLogin = false;
+            // 登录信息存到本地
+            let user = JSON.stringify(res.data.user);
+            setToken(res.data.message)
+            localStorage.setItem("user", user);
+            // 登录信息存到vuex
+            this.setUser(res.data.user);
+            // 弹出通知框提示登录成功信息
+            this.notifySucceed(res.data.msg);
+          });
+          this.getRequest("/api/root/getAllUser").then(resp => {
+            console.log(resp)
+          })
         } else {
           return false;
         }

@@ -24,7 +24,7 @@
                 <el-button type="text" slot="reference" v-model="visible">
                   <el-dropdown>
                   <span class="el-dropdown-link">
-                    {{this.$store.getters.getUser.userName}}
+                    {{this.$store.getters.getUser.username}}
                   </span>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item ><router-link to="/order" style="color:black">我的订单</router-link></el-dropdown-item>
