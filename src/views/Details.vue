@@ -126,16 +126,15 @@ export default {
     ...mapActions(["unshiftShoppingCart", "addShoppingCartNum"]),
     // 获取商品详细信息
     getDetails(val) {
-      this.$axios
-        .post("/api/product/getDetails", {
-          productID: val
-        })
-        .then(res => {
-          this.productDetails = res.data.Product[0];
-        })
-        .catch(err => {
-          return Promise.reject(err);
-        });
+      this.postRequest('/api/getGoodsByGid', {
+          'g_id': val
+      }).then(resp => {
+          this.productDetails = resp.data.message
+      })
+    },
+    // 获取商品图片
+    getDetailsPicture(val) {
+      console.log(val)
     },
     // 获取商品图片
     getDetailsPicture(val) {
