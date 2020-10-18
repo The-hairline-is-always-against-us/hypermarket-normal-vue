@@ -34,7 +34,7 @@
                         <span v-if="store.sale_count ===null">营销额：0</span>
                     </div>
                     <div>
-                        <router-link to="/Store"><el-button type="success" round v-if="store.create_time !==null" style="width:100%;">查看所有商品</el-button></router-link>
+                        <router-link :to="{ path: '/GoodsManage',query: {categoryID:store.s_id} }"><el-button type="success" round v-if="store.create_time !==null" style="width:100%;">查看所有商品</el-button></router-link>
                         
                         <el-button type="info" round v-if="store.create_time ===null" style="width:100%;">该商铺无法正常营业</el-button>
                     </div>
@@ -61,12 +61,12 @@ export default {
         }
     },
     watch: {
-    // 监听商品id的变化，请求后端获取商品数据
-    categoryID: function(val) {
-      this.init(val);
-      this.getDetailsPicture(val);
-    }
-  },
+        // 监听商品id的变化，请求后端获取商品数据
+        categoryID: function(val) {
+        this.init(val);
+        this.getDetailsPicture(val);
+        }
+    },
     methods: {
         init() {
             // 获取店铺详情数据

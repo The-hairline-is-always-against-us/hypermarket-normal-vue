@@ -27,14 +27,14 @@
             <el-form-item label="商品单价">
               <el-input v-model="ruleForm.g_price"></el-input>
             </el-form-item>
-            <el-form-item label="商品数量">
+            <el-form-item label="商品数量" >
               <el-input v-model="ruleForm.g_total"></el-input>
             </el-form-item>
             <el-form-item label="商品简介" prop="g_intro">
                 <el-input type="textarea" v-model="ruleForm.g_intro"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="submitForm('ruleForm')">立即添加</el-button>
+                <el-button type="primary" @click="submitForm('ruleForm')">立即更新</el-button>
                 <el-button @click="resetForm('ruleForm')">重置</el-button>
             </el-form-item>
         </el-form>
@@ -77,6 +77,12 @@ export default {
     created() {
         this.postRequest('/api/getType').then(resp => {
             this.opstions = resp.data.message
+        }),
+        this.postRequest('/api/getGoodsByGid',{
+            g_id: this.$route.query.categoryID
+         }
+        ).then(resp => {
+            this.ruleForm = resp.data.message
         })
     },
     activated() {
@@ -89,7 +95,7 @@ export default {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.postRequest('/api/insertGoods',{
+            this.postRequest('/api/updateGoods',{
               goods: JSON.stringify(this.ruleForm)
             }).then(resp => {
                 this.$message.success(resp.data.message)

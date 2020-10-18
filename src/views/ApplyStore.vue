@@ -122,7 +122,9 @@ export default {
               store: JSON.stringify(this.ruleForm)
             }).then(resp => {
                 this.$message.success(resp.data.message)
-                console.log(this.stores);
+                this.$router.push({
+                path: "/MyStore"
+              });
             })
         } else {
           console.log("error submit!!");
