@@ -66,7 +66,7 @@
     <div v-else class="order-empty">
       <div class="empty">
         <h2>您的店铺还没有商品</h2>
-        <router-link :to="{ path: '/AddGoods' }">
+        <router-link :to="{ path: '/AddGoods' , query : {categoryID:this.categoryID}}">
                 <el-button type="primary">添加商品</el-button>
         </router-link>
         
@@ -82,7 +82,7 @@ export default {
         return {
             goods:null,
             msg:'',
-            categoryID: 0
+            categoryID: ''
         }
       },
       created()  {
@@ -99,7 +99,6 @@ export default {
         // 监听商品id的变化，请求后端获取商品数据
         categoryID: function(val) {
         this.init(val);
-        this.getDetailsPicture(val);
         }
        },
       methods:{
@@ -117,8 +116,12 @@ export default {
             this.postRequest('/api/getGoodsBySID',{
                 s_id:this.categoryID
             }).then(resp => {
-                this.goods = resp.data.message;
-                console.log(this.goods);
+                if (resp.data.code == 500) {
+                  console.log(this.goods);
+                } else {
+                  this.goods = resp.data.message;
+                }
+
             })
         }
       }

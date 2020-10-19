@@ -29,7 +29,7 @@
 </template>
 <script>
 import { mapActions } from "vuex";
-import {setToken} from "@/utils/auth";
+import {setToken, removeToken} from "@/utils/auth";
 
 export default {
   name: "MyLogin",
@@ -95,6 +95,7 @@ export default {
       this.$refs["ruleForm"].validate(valid => {
         //如果通过校验开始登录
         if (valid) {
+          removeToken();
           this.postRequest("/api/login",{
             username: this.LoginUser.name,
             password: this.$md5(this.LoginUser.pass)

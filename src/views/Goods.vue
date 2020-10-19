@@ -185,9 +185,13 @@ export default {
           ? "/api/getGoods"
           : "/api/getGoodsByTname";
       this.postRequest(api,{
-        t_name: this.categoryID
+        t_name: this.categoryID,
+        pageNumber: this.currentPage,
+        pageSize: this.pageSize
       }).then(resp => {
         this.product = resp.data.message;
+        this.total = resp.data.total
+        console.log(resp.data)
       })
     },
     // 通过搜索条件向后端请求商品数据
