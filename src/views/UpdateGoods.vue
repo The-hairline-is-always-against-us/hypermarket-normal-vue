@@ -59,7 +59,7 @@ export default {
         rules: {
           g_name: [
             { required: true, message: '请输入商品名称', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+            { min: 2, max: 64, message: '长度在 3 到 5 个字符', trigger: 'blur' }
           ],
           t_id: [
             { required: true, message: '请选择商品类型', trigger: 'change' }

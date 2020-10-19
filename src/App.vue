@@ -29,8 +29,6 @@
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item ><router-link to="/order" style="color:black">我的订单</router-link></el-dropdown-item>
                     <el-dropdown-item ><router-link to="/collect" style="color:black">我的收藏</router-link></el-dropdown-item>
-<!--                    <el-dropdown-item ><router-link to="/Storedetails" style="color:black">个人信息</router-link></el-dropdown-item>-->
-                    <el-dropdown-item v-if="this.$store.getters.getUser.role.role == 'solder'"><router-link to="/AddGoods" style="color:black">添加商品</router-link></el-dropdown-item>
                     <el-dropdown-item ><router-link to="/MyStore" style="color:black">查看店铺</router-link></el-dropdown-item>
                     <el-dropdown-item @click.native="logout" style="color:black">退出登录</el-dropdown-item>
                   </el-dropdown-menu>
@@ -138,6 +136,7 @@
 <script>
 import { mapActions } from "vuex";
 import { mapGetters } from "vuex";
+import {removeToken} from "@/utils/auth";
 
 export default {
   beforeUpdate() {
@@ -213,6 +212,7 @@ export default {
       localStorage.setItem("user", "");
       // 清空vuex登录信息
       this.setUser("");
+      removeToken();
       this.notifySucceed("成功退出登录");
     },
     // 接收注册子组件传过来的数据

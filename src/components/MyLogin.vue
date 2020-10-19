@@ -99,15 +99,21 @@ export default {
             username: this.LoginUser.name,
             password: this.$md5(this.LoginUser.pass)
           }).then(res => {
-            this.isLogin = false;
-            // 登录信息存到本地
-            let user = JSON.stringify(res.data.user);
-            setToken(res.data.message)
-            localStorage.setItem("user", user);
-            // 登录信息存到vuex
-            this.setUser(res.data.user);
-            // 弹出通知框提示登录成功信息
-            this.notifySucceed(res.data.msg);
+            if (res.data.code == 500) {
+              this.notifyError(res.data.message);
+            } else if (res.data.code == 201) {
+              this.notifyError("请前往邮箱激活用户后进行登录");
+            } else {
+              this.isLogin = false;
+              // 登录信息存到本地
+              let user = JSON.stringify(res.data.user);
+              setToken(res.data.message)
+              localStorage.setItem("user", user);
+              // 登录信息存到vuex
+              this.setUser(res.data.user);
+              // 弹出通知框提示登录成功信息
+              this.notifySucceed("登录成功");
+            }
           });
           this.getRequest("/api/root/getAllUser").then(resp => {
             console.log(resp)
