@@ -29,7 +29,7 @@
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item ><router-link to="/order" style="color:black">我的订单</router-link></el-dropdown-item>
                     <el-dropdown-item ><router-link to="/collect" style="color:black">我的收藏</router-link></el-dropdown-item>
-                    <el-dropdown-item ><router-link to="/Storedetails" style="color:black">个人信息</router-link></el-dropdown-item>
+<!--                    <el-dropdown-item ><router-link to="/Storedetails" style="color:black">个人信息</router-link></el-dropdown-item>-->
                     <el-dropdown-item v-if="this.$store.getters.getUser.role.role == 'solder'"><router-link to="/AddGoods" style="color:black">添加商品</router-link></el-dropdown-item>
                     <el-dropdown-item ><router-link to="/MyStore" style="color:black">查看店铺</router-link></el-dropdown-item>
                     <el-dropdown-item @click.native="logout" style="color:black">退出登录</el-dropdown-item>
@@ -51,7 +51,7 @@
             <li :class="getNum > 0 ? 'shopCart-full' : 'shopCart'">
               <router-link to="/shoppingCart">
                 <i class="el-icon-shopping-cart-full"></i> 购物车
-                <span class="num">({{getNum}})</span>
+<!--                <span class="num">({{getNum}})</span>-->
               </router-link>
             </li>
 

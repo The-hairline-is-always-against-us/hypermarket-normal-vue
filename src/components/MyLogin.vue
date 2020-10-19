@@ -97,7 +97,7 @@ export default {
         if (valid) {
           this.postRequest("/api/login",{
             username: this.LoginUser.name,
-            password: this.LoginUser.pass
+            password: this.$md5(this.LoginUser.pass)
           }).then(res => {
             this.isLogin = false;
             // 登录信息存到本地

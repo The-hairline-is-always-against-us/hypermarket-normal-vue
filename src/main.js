@@ -16,6 +16,7 @@ Vue.use(ElementUI);
 import {getRequest} from './utils/axiousApi'
 import {postRequest} from './utils/axiousApi'
 import {uploadFileRequest} from './utils/axiousApi'
+import md5 from 'js-md5';
 
 // 全局函数及变量
 import Global from './Global';
@@ -24,6 +25,7 @@ Vue.use(Global);
 Vue.prototype.getRequest = getRequest;
 Vue.prototype.postRequest = postRequest;
 Vue.prototype.uploadFileRequest = uploadFileRequest;
+Vue.prototype.$md5 = md5;
 
 import Axios from 'axios';
 Vue.prototype.$axios = Axios;

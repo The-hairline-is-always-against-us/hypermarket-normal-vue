@@ -82,7 +82,7 @@ export default {
         return {
             goods:null,
             msg:'',
-            categoryID: 6
+            categoryID: 0
         }
       },
       created()  {
@@ -93,6 +93,7 @@ export default {
                 this.categoryID = this.$route.query.categoryID;
                 console.log(this.$route.query.categoryID)
             }
+            this.init()
         },
         watch: {
         // 监听商品id的变化，请求后端获取商品数据
